@@ -1,7 +1,7 @@
 import streamlit as st
 from akun import login
 from Manajemen import pertambahan_aset,suplier,karyawan
-from input import penjualan_harian
+from Input import penjualan_harian
 from Laporan import output
 # Inisialisasi status login
 if "username" not in st.session_state:
