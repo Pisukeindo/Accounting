@@ -23,7 +23,7 @@ else:
         )
         if selected_page == "Penjualan Harian":
             st.title("Penjualan Harian")
-            penjualan_harian.penjualan_harian()
+            penjualan_harian()
         elif selected_page == "Suplier":
             suplier.suplier()
         elif selected_page == "Pertambahan Aset":
