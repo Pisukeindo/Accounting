@@ -5,12 +5,15 @@ import locale
 
 def penjualan_harian():
 
-    def format_rupiah(angka, with_prefix=False, desimal=2):
-        locale.setlocale(locale.LC_NUMERIC, 'IND')
-        rupiah = locale.format("%.*f", (desimal, angka), True)
-        if with_prefix:
-            return "Rp. {}".format(rupiah)
-        return rupiah
+    def format_rupiah(angka):
+        angka_str = str(angka)
+        ribuan = ""
+        n = len(angka_str)
+        for i, digit in enumerate(angka_str[::-1]):
+            ribuan = digit + ribuan
+            if (i + 1) % 3 == 0 and i != n - 1:
+                ribuan = "." + ribuan
+        return "Total Pendapatan: Rp " + ribuan
         
     # URL layanan web Apps Script
     apps_script_url = "https://script.google.com/macros/s/AKfycbwcTkKh4yTQyQVZiSTmtuSVbzEuB4h-ceLEwuoaajbZSKnYTj_mOwRnq37HgSP3FmICrw/exec"
