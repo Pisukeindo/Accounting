@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-def penjualan_harian:
-# Initial scorecard dataframe
+
     scorecard = pd.DataFrame(columns=['User', 'Pushups', 'Pullups', 'Totaled'])
     
     # Input your data using experimental data editor
