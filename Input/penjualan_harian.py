@@ -6,11 +6,11 @@ import locale
 def penjualan_harian():
 
     def format_rupiah(angka, with_prefix=False, desimal=2):
-    locale.setlocale(locale.LC_NUMERIC, 'IND')
-    rupiah = locale.format("%.*f", (desimal, angka), True)
-    if with_prefix:
-        return "Rp. {}".format(rupiah)
-    return rupiah
+        locale.setlocale(locale.LC_NUMERIC, 'IND')
+        rupiah = locale.format("%.*f", (desimal, angka), True)
+        if with_prefix:
+            return "Rp. {}".format(rupiah)
+        return rupiah
         
     # URL layanan web Apps Script
     apps_script_url = "https://script.google.com/macros/s/AKfycbwcTkKh4yTQyQVZiSTmtuSVbzEuB4h-ceLEwuoaajbZSKnYTj_mOwRnq37HgSP3FmICrw/exec"
