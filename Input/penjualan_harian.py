@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import requests
 
 def penjualan_harian():
@@ -9,107 +10,73 @@ def penjualan_harian():
     # Streamlit UI
     st.write("Masukkan Data:")
 
-    # Display the input data in a dynamic HTML table
-    st.markdown("""
-        <table id="data-table">
-            <tr>
-                <th>Tanggal</th>
-                <th>Outlet</th>
-                <th>Pisang Aroma Masuk</th>
-                <th>Pisang Aroma Bonus</th>
-                <th>Pisang Aroma Rusak</th>
-                <th>Pisang Aroma Sisa</th>
-                <th>Pisang Aroma Terjual</th>
-                <th>Cheese Roll Masuk</th>
-                <th>Cheese Roll Bonus</th>
-                <th>Cheese Roll Rusak</th>
-                <th>Cheese Roll Sisa</th>
-                <th>Cheese Roll Terjual</th>
-                <th>QRIS</th>
-                <th>Tunai</th>
-                <th>Pengeluaran</th>
-                <th>Total</th>
-                <th>Disetor</th>
-            </tr>
-            <tr>
-                <td><input type="date" id="tanggal"></td>
-                <td>
-                    <select id="outlet">
-                        <option value="Pogung Pagi">Pogung Pagi</option>
-                        <option value="Pogung Sore">Pogung Sore</option>
-                        <!-- Add other options here -->
-                    </select>
-                </td>
-                <td><input type="number" id="pisang_aroma_masuk" min="0"></td>
-                <td><input type="number" id="pisang_aroma_bonus" min="0"></td>
-                <td><input type="number" id="pisang_aroma_rusak" min="0"></td>
-                <td><input type="number" id="pisang_aroma_sisa" min="0"></td>
-                <td><input type="number" id="pisang_aroma_terjual" min="0"></td>
-                <td><input type="number" id="cheese_roll_masuk" min="0"></td>
-                <td><input type="number" id="cheese_roll_bonus" min="0"></td>
-                <td><input type="number" id="cheese_roll_rusak" min="0"></td>
-                <td><input type="number" id="cheese_roll_sisa" min="0"></td>
-                <td><input type="number" id="cheese_roll_terjual" min="0"></td>
-                <td><input type="number" id="qris" min="0"></td>
-                <td><input type="number" id="tunai" min="0"></td>
-                <td><input type="number" id="pengeluaran" min="0"></td>
-                <td><span id="total">0</span></td>
-                <td><input type="number" id="disetor" min="0"></td>
-            </tr>
-        </table>
-        <button onclick="addRow()">Tambah Baris</button>
-        <button onclick="kirimData()">Kirim Data</button>
+    # Create an empty DataFrame to store the data
+    data_columns = ["Tanggal", "Outlet", "Pisang Aroma Masuk", "Pisang Aroma Bonus", "Pisang Aroma Rusak",
+                    "Pisang Aroma Sisa", "Pisang Aroma Terjual", "Cheese Roll Masuk", "Cheese Roll Bonus",
+                    "Cheese Roll Rusak", "Cheese Roll Sisa", "Cheese Roll Terjual", "QRIS", "Tunai",
+                    "Pengeluaran", "Total", "Disetor"]
 
-        <script>
-            function addRow() {
-                var table = document.getElementById("data-table");
-                var row = table.insertRow();
+    data = pd.DataFrame(columns=data_columns)
 
-                var inputFields = [
-                    "tanggal", "outlet", "pisang_aroma_masuk", "pisang_aroma_bonus", "pisang_aroma_rusak",
-                    "pisang_aroma_sisa", "pisang_aroma_terjual", "cheese_roll_masuk", "cheese_roll_bonus",
-                    "cheese_roll_rusak", "cheese_roll_sisa", "cheese_roll_terjual", "qris", "tunai",
-                    "pengeluaran", "total", "disetor"
-                ];
+    # Display the input data in a table
+    st.table(data)
 
-                for (var i = 0; i < inputFields.length; i++) {
-                    var cell = row.insertCell();
-                    var input = document.createElement("input");
-                    input.type = (inputFields[i].includes("date")) ? "date" : "number";
-                    input.id = inputFields[i] + "_" + table.rows.length;
-                    input.min = 0;
-                    cell.appendChild(input);
-                }
-            }
+    # Input fields
+    tanggal = st.date_input("Tanggal")
+    outlet = st.selectbox("Pilih Outlet", ["Pogung Pagi", "Pogung Sore", "Pandega Mixue Pagi", "Pandega Mixue Sore", "Pandega Massiva", "UNY Pagi", "UNY Sore", "Terban", "Jl. Persatuan"])
+    pisang_aroma_masuk = st.number_input("Pisang Aroma Masuk", min_value=0)
+    pisang_aroma_bonus = st.number_input("Pisang Aroma Bonus", min_value=0)
+    pisang_aroma_rusak = st.number_input("Pisang Aroma Rusak", min_value=0)
+    pisang_aroma_sisa = st.number_input("Pisang Aroma Sisa", min_value=0)
+    pisang_aroma_terjual = st.number_input("Pisang Aroma Terjual", min_value=0)
+    cheese_roll_masuk = st.number_input("Cheese Roll Masuk", min_value=0)
+    cheese_roll_bonus = st.number_input("Cheese Roll Bonus", min_value=0)
+    cheese_roll_rusak = st.number_input("Cheese Roll Rusak", min_value=0)
+    cheese_roll_sisa = st.number_input("Cheese Roll Sisa", min_value=0)
+    cheese_roll_terjual = st.number_input("Cheese Roll Terjual", min_value=0)
+    qris = st.number_input("QRIS", min_value=0)
+    tunai = st.number_input("Tunai", min_value=0)
+    pengeluaran = st.number_input("Pengeluaran", min_value=0)
+    disetor = st.number_input("Disetor", min_value=0)
 
-            function kirimData() {
-                var url = "{apps_script_url}?";
+    # Button to add a row to the table
+    if st.button("Tambah Baris"):
+        data = data.append({
+            "Tanggal": tanggal,
+            "Outlet": outlet,
+            "Pisang Aroma Masuk": pisang_aroma_masuk,
+            "Pisang Aroma Bonus": pisang_aroma_bonus,
+            "Pisang Aroma Rusak": pisang_aroma_rusak,
+            "Pisang Aroma Sisa": pisang_aroma_sisa,
+            "Pisang Aroma Terjual": pisang_aroma_terjual,
+            "Cheese Roll Masuk": cheese_roll_masuk,
+            "Cheese Roll Bonus": cheese_roll_bonus,
+            "Cheese Roll Rusak": cheese_roll_rusak,
+            "Cheese Roll Sisa": cheese_roll_sisa,
+            "Cheese Roll Terjual": cheese_roll_terjual,
+            "QRIS": qris,
+            "Tunai": tunai,
+            "Pengeluaran": pengeluaran,
+            "Total": qris + tunai - pengeluaran,
+            "Disetor": disetor
+        }, ignore_index=True)
 
-                var inputFields = [
-                    "tanggal", "outlet", "pisang_aroma_masuk", "pisang_aroma_bonus", "pisang_aroma_rusak",
-                    "pisang_aroma_sisa", "pisang_aroma_terjual", "cheese_roll_masuk", "cheese_roll_bonus",
-                    "cheese_roll_rusak", "cheese_roll_sisa", "cheese_roll_terjual", "qris", "tunai",
-                    "pengeluaran", "total", "disetor"
-                ];
+    # Button to send data
+    if st.button("Kirim Data"):
+        # Convert DataFrame to dictionary
+        data_dict = data.to_dict(orient="records")
 
-                for (var i = 0; i < inputFields.length; i++) {
-                    var input = document.getElementById(inputFields[i] + "_" + table.rows.length);
-                    url += inputFields[i] + "=" + input.value + "&";
-                }
+        # Membangun URL dengan parameter query string
+        url = f"{apps_script_url}?data={data_dict}"
 
-                // Remove the last "&" from the URL
-                url = url.slice(0, -1);
+        # Mengirim permintaan HTTP GET ke Apps Script
+        response = requests.get(url)
 
-                var response = fetch(url);
-
-                if (response.status === 200) {
-                    alert("Data berhasil dikirim!");
-                } else {
-                    alert("Terjadi kesalahan saat mengirim data.");
-                }
-            }
-        </script>
-    """)
+        if response.status_code == 200:
+            st.success("Data berhasil dikirim!")
+        else:
+            st.error("Terjadi kesalahan saat mengirim data.")
 
 if __name__ == "__main__":
     penjualan_harian()
+
