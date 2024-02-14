@@ -23,7 +23,7 @@ def penjualan_harian():
     # Kolom input
     tanggal = st.date_input("Tanggal")
     tanggal_str = tanggal.strftime('%Y-%m-%d')
-    outlet = st.selectbox("Pilih Outlet", ["Pogung Pagi","Pogung Sore", "Pandega Mixue Pagi", "Pandega Mixue Sore", "Pandega Massiva", "UNY Pagi", "UNY Sore", "Monjali"])
+    outlet = st.selectbox("Pilih Outlet", ["Pogung Pagi","Pogung Sore", "Pandega Mixue Pagi", "Pandega Mixue Sore", "Pandega Massiva", "UNY Pagi", "UNY Sore", "Terban", "Jl. Persatuan"])
     pisang_aroma_masuk = st.number_input("Pisang Aroma Masuk", min_value=0)
     pisang_aroma_bonus = st.number_input("Pisang Aroma Bonus", min_value=0)
     pisang_aroma_rusak = st.number_input("Pisang Aroma Rusak", min_value=0)
