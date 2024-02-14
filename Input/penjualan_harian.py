@@ -37,6 +37,8 @@ def penjualan_harian():
     qris = st.number_input("QRIS", min_value=0)
     tunai = st.number_input("Tunai", min_value=0)
     pengeluaran = st.number_input("Pengeluaran", min_value=0)
+    disetor = st.number_input("Disetor", min_value=0)
+
     total = qris + tunai - pengeluaran
     jumlah_rupiah = format_rupiah(total)
 
