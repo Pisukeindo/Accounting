@@ -1,11 +1,7 @@
 import streamlit as st
 import pandas as pd
-import requests
 
 def penjualan_harian():
-
-    # URL for the Google Apps Script
-    apps_script_url = "https://script.google.com/macros/s/AKfycbwcTkKh4yTQyQVZiSTmtuSVbzEuB4h-ceLEwuoaajbZSKnYTj_mOwRnq37HgSP3FmICrw/exec"
 
     # Streamlit UI
     st.write("Masukkan Data:")
@@ -18,8 +14,8 @@ def penjualan_harian():
 
     data = pd.DataFrame(columns=data_columns)
 
-    # Display the input data in a table
-    st.table(data)
+    # Create a table to input data
+    input_table = st.empty()
 
     # Input fields
     tanggal = st.date_input("Tanggal")
@@ -39,7 +35,7 @@ def penjualan_harian():
     pengeluaran = st.number_input("Pengeluaran", min_value=0)
     disetor = st.number_input("Disetor", min_value=0)
 
-    # Button to add a row to the table
+    # Button to add a row to the input table
     if st.button("Tambah Baris"):
         data = data.append({
             "Tanggal": tanggal,
@@ -61,21 +57,8 @@ def penjualan_harian():
             "Disetor": disetor
         }, ignore_index=True)
 
-    # Button to send data
-    if st.button("Kirim Data"):
-        # Convert DataFrame to dictionary
-        data_dict = data.to_dict(orient="records")
-
-        # Membangun URL dengan parameter query string
-        url = f"{apps_script_url}?data={data_dict}"
-
-        # Mengirim permintaan HTTP GET ke Apps Script
-        response = requests.get(url)
-
-        if response.status_code == 200:
-            st.success("Data berhasil dikirim!")
-        else:
-            st.error("Terjadi kesalahan saat mengirim data.")
+    # Display the input data in a table
+    input_table.table(data)
 
 if __name__ == "__main__":
     penjualan_harian()
