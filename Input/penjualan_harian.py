@@ -1,8 +1,17 @@
 import streamlit as st
+import pandas as pd
 
 def penjualan_harian():
     # Streamlit UI
     st.write("Masukkan Data:")
+
+    # Create an empty DataFrame to store the data
+    data_columns = ["Tanggal", "Outlet", "Pisang Aroma Masuk", "Pisang Aroma Bonus", "Pisang Aroma Rusak",
+                    "Pisang Aroma Sisa", "Pisang Aroma Terjual", "Cheese Roll Masuk", "Cheese Roll Bonus",
+                    "Cheese Roll Rusak", "Cheese Roll Sisa", "Cheese Roll Terjual", "QRIS", "Tunai",
+                    "Pengeluaran", "Total", "Disetor"]
+
+    data = pd.DataFrame(columns=data_columns)
 
     # Create a table to input data using HTML
     st.markdown("""
@@ -64,9 +73,9 @@ def penjualan_harian():
                 <td><input type="number" id="pengeluaran" min="0"></td>
                 <td><span id="total">0</span></td>
                 <td><input type="number" id="disetor" min="0"></td>
+                <td><button onclick="addRow()">Tambah Baris</button></td>
             </tr>
         </table>
-        <button onclick="addRow()">Tambah Baris</button>
         <button onclick="kirimData()">Kirim Data</button>
 
         <script>
@@ -119,6 +128,6 @@ def penjualan_harian():
             }
         </script>
     """)
-    
+
 if __name__ == "__main__":
     penjualan_harian()
