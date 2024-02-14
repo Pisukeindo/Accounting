@@ -1,1 +1,1 @@
-locales-all
+streamlit-aggrid==0.3.3
